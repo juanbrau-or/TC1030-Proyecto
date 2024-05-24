@@ -3,3 +3,6 @@ Un servicio de streaming busca tener un control de sus contenidos para hacer má
 
 # Consideraciones
 El programa sólo permite actualizaciones de agregar contenido nuevo, por lo que no es posible eliminar episodios, películas, o temporadas de series.
+
+# Actualizaciones
+Se implementaron las clases propuestas en el diagrama UML en el archivo multimedia.h
