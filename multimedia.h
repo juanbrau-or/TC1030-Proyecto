@@ -46,7 +46,7 @@ void Serie::lanzaTemporada(Temporada nueva) {
 
 std::string Serie::to_string() {
 	std::stringstream ss;
-	ss << nombre << std::endl;
+	ss << "Serie: " << nombre << std::endl;
 	for( int i=0; i<cnt; i++ )
 		ss << temporadas[i].to_string();
 	return ss.str();
@@ -59,7 +59,13 @@ class Pelicula: public Multimedia {
 	Pelicula(std::string _nombre):Multimedia(_nombre){};
 	int getDuracion(){ return duracion; }
 	void setDuracion(int _duracion){ duracion = _duracion; }
-	std::string to_string(){ return "si"; }
+	std::string to_string();
 };
+
+std::string Pelicula::to_string() {
+	std::stringstream ss;
+	ss << "Pelicula: " << nombre << std::endl;
+	return ss.str();
+}
 
 #endif
