@@ -6,3 +6,5 @@ El programa sólo permite actualizaciones de agregar contenido nuevo, por lo que
 
 # Actualizaciones
 Se implementaron las clases propuestas en el diagrama UML en el archivo multimedia.h
+
+Se creó el archivo series.h para las clases Episodio y Temporada para la mejor lectura del código, también se agregaron las funciones to_string para regresar la información de cada clase, esta función se realzó como virtual en la clase Multimedia para poder reescribirla al utilizar apuntadores y hacer uso de polimorfismo. También, se agregó un main para mostrar un ejemplo de la función to_string.
