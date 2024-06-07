@@ -482,7 +482,7 @@ void modifica_multimedia(Streaming &biblioteca,
 				return;
 			}
 			std::cout << "Esta temporada cuenta con " << 
-				temp.getNumEpisodios() << "episodios\n";
+				temp.getNumEpisodios() << " episodio(s)\n";
 			int y;
 			continua = true;
 			while( continua ) {
@@ -505,6 +505,7 @@ void modifica_multimedia(Streaming &biblioteca,
 			Episodio nuevo = temp.consultaEpisodio(y);
 			if( afirmativo("¿Desea modificar el nombre del episodio?") ) {
 				std::string nombre;
+				std::cout << "Ingrese el nuevo nombre del episodio: ";
 				fflush(stdin); getline(std::cin, nombre);
 				nuevo.setNombre(nombre);
 			}
@@ -653,6 +654,7 @@ void actualiza_contenido(Streaming &biblioteca,
 			std::cout << "1. Modificar serie/pelicula/episodio\n";
 			std::cout << "2. Modificar plataforma de streaming\n";
 			std::cout << "0. Cancelar\n";
+			continua = true;
 			while( continua ) {
 				std::cout<<"Ingrese el numero de lo que se desea modificar: ";
 				continua = false;
