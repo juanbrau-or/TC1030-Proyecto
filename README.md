@@ -11,4 +11,4 @@ Se creó el archivo series.h para las clases Episodio y Temporada para la mejor 
 
 Se agregó interacción con el usuario para que pueda crear contenido multimedia, también se volvió a la clase Multimedia abstracta pues la plataforma solo soporta películas y series, y cada una ya cuenta con su clase. Aún faltan por implementar las funciones modifica_multimedia y modifica_plataforma
 
-Se terminó de implementar la función modifica_plataforma
+Se terminó de implementar la función modifica_plataforma y la función modifica_multimedia en menus.h
