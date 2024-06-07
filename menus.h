@@ -61,7 +61,8 @@ void lanza_multimedia(Streaming &biblioteca,
 	if( afirmativo("¿El contenido a lanzar es una pelicula?") ) {
 		// lanza pelicula
 		std::string nombre;
-		int year, calificacion, duracion;
+		int year, duracion;
+		float calificacion;
 		std::cout << "Ingrese el nombre de la pelicula: ";
 		fflush(stdin); getline(std::cin, nombre);
 		bool continua = true;
@@ -125,7 +126,8 @@ void lanza_multimedia(Streaming &biblioteca,
 		if( afirmativo("¿El contenido es una nueva serie?") ) {
 			// lanza serie
 			std::string nombre;
-			int year, calificacion;
+			int year;
+			float calificacion;
 			std::cout << "Ingrese el nombre de la serie: ";
 			fflush(stdin); getline(std::cin, nombre);
 			
@@ -327,7 +329,211 @@ void lanza_plataforma(Streaming &biblioteca,
 
 void modifica_multimedia(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
-	;
+	if( nMult == 0 ) {
+		std::cout << "No hay contenido multimedia disponible "
+			<< "para modificar\n";
+		return;
+	}
+	std::cout << "El contenido disponible es el siguiente:\n";
+	for( int i=0; i<nMult; i++ ) {
+		std::cout << i+1 << ". " <<
+			biblioteca.consulta_multimedia(i)->getNombre() << "\n";
+	}
+	std::string num;
+	bool continua = true;
+	int x;
+	while( continua ) {
+		continua = false;
+		std::cout << "Ingrese el numero del contenido a modificar: ";
+		fflush(stdin); getline(std::cin, num);
+		if( !isnum(num) ) {
+			std::cout << "Numero invalido, intente de nuevo\n";
+			continua = true;
+			continue;
+		}
+		x = stoi(num)-1;
+		if( x < 0 || x >= nMult ) {
+			std::cout << "Numero invalido, intente de nuevo\n";
+			continua = true;
+			continue;
+		}
+	}
+	// modificar elemento x de biblioteca
+	std::cout << "Las posibles modificaciones son:\n";
+	std::cout << "1. Nombre\n";
+	std::cout << "2. Año de publicacion\n";
+	std::cout << "3. Calificacion\n";
+	std::cout << "4. Bloquear/Desbloquear contenido\n";
+	std::cout << "5. ";
+	Multimedia* aux = biblioteca.modifica_multimedia(x);
+	if( aux->getTipo() == "serie" ) {
+		std::cout << "Episodio\n";
+	}
+	else {
+		std::cout << "Duracion\n";
+	}
+	std::cout << "0. Cancelar\n";
+	continua = true;
+	while( continua ) {
+		std::cout << "Ingrese el numero de la opcion a modificar: ";
+		continua = false;
+		fflush(stdin); getline(std::cin, num);
+		if( num == "1" ) {
+			std::string nombre;
+			std::cout << "Ingrese el nuevo nombre: ";
+			fflush(stdin); getline(std::cin, nombre);
+			aux->setNombre(nombre);
+			return;
+		}
+		else if( num == "2" ) {
+			int year;
+			continua = true;
+			while( continua ) {
+				continua = false;
+				std::cout << "Ingrese el nuevo año: ";
+				fflush(stdin); getline(std::cin, num);
+				if( !isnum(num) ) {
+					std::cout << "Ingrese un numero valido\n";
+					continua = true;
+					continue;
+				}
+				year = stoi(num);
+			}
+			aux->setYear(year);
+			return;
+		}
+		else if( num == "3" ) {
+			float calificacion;
+			continua = true;
+			while( continua ) {
+				continua = false;
+				std::cout << "Ingrese la nueva calificacion: ";
+				fflush(stdin); getline(std::cin, num);
+				if( !isdecimal(num) ) {
+					std::cout << "Ingrese un numero valido\n";
+					continua = true;
+					continue;
+				}
+				calificacion = stof(num);
+				if( calificacion < 0 || calificacion > 5 ) {
+					std::cout << "La calificacion debe estar entre 0 y 5\n";
+					continua = true;
+					continue;
+				}
+			}
+			aux->setCalificacion(calificacion);
+		}
+		else if( num == "4" ) {
+			if( afirmativo("¿Desea desbloquear el contenido?") )
+				aux->setBlock(false);
+			else aux->setBlock(true);
+		}
+		else if( num == "5" ) {
+			// si es pelicula modificar duracion
+			if( aux->getTipo() == "pelicula" ) {
+				int duracion;
+				continua = true;
+				while( continua ) {
+					continua = false;
+					std::cout << "Ingrese la nueva duracion: ";
+					fflush(stdin); getline(std::cin, num);
+					if( !isnum(num) ) {
+						std::cout << "Ingrese un numero valido\n";
+						continua = true;
+						continue;
+					}
+					duracion = stoi(num);
+				}
+				((Pelicula*)aux)->setDuracion(duracion);
+				return;
+			}
+			// si es serie modificar temporada o episodio
+			Serie* pt = (Serie*)aux;
+			if( pt->getNumTemporadas() == 0 ) {
+				std::cout << "No hay contenido para modificar en esta"
+					<< "serie\n";
+				return;
+			}
+			std::cout << "La serie cuenta con " << pt->getNumTemporadas()
+				<< " temporadas\n";
+			continua = true;
+			int x;
+			while( continua ) {
+				std::cout << "Ingrese el numero de temporada a modificar: ";
+				continua = false;
+				fflush(stdin); getline(std::cin, num);
+				if( !isnum(num) ) {
+					std::cout << "Ingrese un numero valido\n";
+					continua = true;
+					continue;
+				}
+				x = stoi(num)-1;
+				if( x < 0 || x >= pt->getNumTemporadas() ) {
+					std::cout << "Ingrese un numero valido\n";
+					continua = true;
+					continue;
+				}
+			}
+			// modificar temporada x
+			Temporada temp = pt->consulta_temporada(x);
+			if( temp.getNumEpisodios() == 0 ) {
+				std::cout << "Esta temporada no cuenta con episodios "
+					<< "para modificar\n";
+				return;
+			}
+			std::cout << "Esta temporada cuenta con " << 
+				temp.getNumEpisodios() << "episodios\n";
+			int y;
+			continua = true;
+			while( continua ) {
+				std::cout << "Ingrese el numero de episodio a modificar: ";
+				continua = false;
+				fflush(stdin); getline(std::cin, num);
+				if( !isnum(num) ) {
+					std::cout << "Numero invalido, intente de nuevo\n";
+					continua = true;
+					continue;
+				}
+				y = stoi(num)-1;
+				if( y < 0 || y >= temp.getNumEpisodios() ) {
+					std::cout << "Numero invalido, intente de nuevo\n";
+					continua = true;
+					continue;
+				}
+			}
+			// modificar episodio y
+			Episodio nuevo = temp.consultaEpisodio(y);
+			if( afirmativo("¿Desea modificar el nombre del episodio?") ) {
+				std::string nombre;
+				fflush(stdin); getline(std::cin, nombre);
+				nuevo.setNombre(nombre);
+			}
+			if( afirmativo("¿Desea modificar la duracion del episodio?") ) {
+				int duracion;
+				continua = true;
+				while( continua ) {
+					continua = false;
+					std::cout << "Ingrese la nueva duracion: ";
+					fflush(stdin); getline(std::cin, num);
+					if( !isnum(num) ) {
+						std::cout << "Numero invalido, intente de nuevo\n";
+						continua = true;
+						continue;
+					}
+					duracion = stoi(num);
+				}
+				nuevo.setDuracion(duracion);
+			}
+			pt->modificaEpisodio(x,y,nuevo);
+		}
+		else if( num == "0" ) {
+			return;
+		}
+		else {
+			continua = true;
+			std::cout << "Comando invalido, intente de nuevo\n";
+		}
+	}
 }
 
 void modifica_plataforma(Streaming &biblioteca,
