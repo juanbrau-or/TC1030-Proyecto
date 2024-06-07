@@ -9,28 +9,24 @@ class Episodio {
 	private:
 	std::string nombre;
 	int duracion;
-	int numEpisodio;
 	public:
-	Episodio(std::string, int, int);
-	Episodio():nombre("0"),duracion(0),numEpisodio(-1){};
+	Episodio(std::string, int);
+	Episodio():nombre("0"),duracion(0){};
 	std::string getNombre(){ return nombre; }
 	void setNombre(std::string _nombre){ nombre = _nombre; }
 	int getDuracion(){ return duracion; }
 	void setDuracion(int _duracion){ duracion = _duracion; }
-	int getNumEpisodio(){ return numEpisodio; }
-	void setNumEpisodio(int num){ numEpisodio = num; }
-	std::string to_string();
+	std::string to_string() const;
 };
 
-Episodio::Episodio(std::string _nombre, int _duracion, int _numEpisodio) {
+Episodio::Episodio(std::string _nombre, int _duracion) {
 	nombre = _nombre;
 	duracion = _duracion;
-	numEpisodio = _numEpisodio;
 }
 
-std::string Episodio::to_string() {
+std::string Episodio::to_string() const{
 	std::stringstream ss;
-	ss << nombre << " ";
+	ss << nombre << ". Duracion: " << duracion;
 	return ss.str();
 }
 
@@ -39,28 +35,30 @@ class Temporada {
 		int numTemporada;
 		int numEpisodios;
 		Episodio episodios[N];
-		int cnt;
 		public:
-		Temporada():numTemporada(0),numEpisodios(0),cnt(0){};
-		Temporada(int num):numTemporada(num),numEpisodios(0),cnt(0){};
+		Temporada():numTemporada(0),numEpisodios(0){};
+		Temporada(int num):numTemporada(num),numEpisodios(0){};
 		int getNumTemporada(){ return numTemporada; }
 		void setNumTemporada(int num){ numTemporada = num; }
 		int getNumEpisodios(){ return numEpisodios; }
 		void lanzaEpisodio(Episodio);
-		std::string to_string();
+		std::string to_string() const;
+		std::string info_episodio(int x)const{return episodios[x].to_string();}
 };
 
 void Temporada::lanzaEpisodio(Episodio nuevo) {
-	episodios[cnt] = nuevo;
-	++cnt;
+	episodios[numEpisodios] = nuevo;
+	++numEpisodios;
 }
 
-std::string Temporada::to_string() {
+std::string Temporada::to_string() const{
 	std::stringstream ss;
-	ss << "Temporada #" << numTemporada << std::endl;
-	for( int i=0; i<cnt; i++ )
-		ss << episodios[i].to_string();
-	ss << std::endl;
+	ss << "Temporada #" << numTemporada << "\n";
+	ss << "No. de episodios: " << numEpisodios << "\n";
+	for( int i=0; i<numEpisodios; i++ ) {
+		ss << "\tEpisodio # " << i+1 << " "
+			<< episodios[i].to_string() << "\n";
+	}
 	return ss.str();
 }
 
