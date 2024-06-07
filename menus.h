@@ -362,6 +362,49 @@ void modifica_plataforma(Streaming &biblioteca,
 		}
 	}
 	// modifica streaming x
+	if( afirmativo("¿Desea cambiar el nombre del servicio?") ) {
+		std::cout << "Ingrese el nuevo nombre de la plataforma: ";
+		std::string aux;
+		fflush(stdin); getline(std::cin, aux);
+		servicios[x].setNombre(aux);
+		return;
+	}
+	// agrega un multimedia
+	if( nMult == 0 ) {
+		std::cout << "Por el momento no hay contenido disponible para "
+			<< "agregar\n";
+		return;
+	}
+	std::cout << "El catalogo disponible es el siguiente:\n";
+	for( int i=0; i<nMult; i++ ) {
+		std::cout << i+1 << ". " 
+			<< biblioteca.consulta_multimedia(i)->getNombre() << "\n";
+	}
+	continua = true;
+	int otro;
+	while( continua ) {
+		continua = false;
+		std::cout << "Ingrese el numero del contenido a agregar: ";
+		fflush(stdin); getline(std::cin, num);
+		if( !isnum(num) ) {
+			std::cout << "Ingrese un numero valido\n";
+			continua = true;
+			continue;
+		}
+		otro = stoi(num)-1;
+		if( otro < 0 || otro >= nMult ) {
+			std::cout << "Ingrese un numero valido\n";
+			continua = true;
+			continue;
+		}
+	}
+	// agrega elemento otro de la biblioteca al streaming x
+	if( biblioteca.consulta_multimedia(otro)->bloqueado() ) {
+		std::cout << "El elemento seleccionado es exclusivo de otra"
+			<< " plataforma, para agregarlo primero debe liberarse\n";
+		return;
+	}
+	servicios[x].lanzaMultimedia(biblioteca.consulta_multimedia(otro));
 }
 
 void actualiza_contenido(Streaming &biblioteca,
