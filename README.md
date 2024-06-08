@@ -14,3 +14,5 @@ Se agregó interacción con el usuario para que pueda crear contenido multimedia
 Se terminó de implementar la función modifica_plataforma y la función modifica_multimedia en menus.h
 
 Correción de errores, se agregó la opción para crear ejemplos al inicio del programa
+
+Se actualizó el diagrama UML conforme a los cambios hechos en las clases
