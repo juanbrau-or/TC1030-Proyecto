@@ -44,6 +44,8 @@ class Temporada {
 		void lanzaEpisodio(Episodio);
 		std::string to_string() const;
 		std::string info_episodio(int x)const{return episodios[x].to_string();}
+		void modificaEpisodio(int, Episodio);
+		Episodio consultaEpisodio(int x){ return episodios[x]; }
 };
 
 void Temporada::lanzaEpisodio(Episodio nuevo) {
@@ -60,6 +62,10 @@ std::string Temporada::to_string() const{
 			<< episodios[i].to_string() << "\n";
 	}
 	return ss.str();
+}
+
+void Temporada::modificaEpisodio(int x, Episodio nuevo) {
+	episodios[x] = nuevo;
 }
 
 #endif

@@ -3,6 +3,77 @@
 #include "multimedia.h"
 #include "menus.h"
 
+void crea_ejemplos(Streaming &biblioteca, Streaming *servicios, 
+		int &nServ, int &nMult ) {
+	servicios[0] = Streaming("Netflix Mexico");
+	servicios[1] = Streaming("Disney+ Mexico");
+	servicios[2] = Streaming("Max US");
+	servicios[3] = Streaming("Star+ Mexico");
+	// Pelicula -> nombre, bloqueado, año, duracion, calificacion
+	Multimedia* increibles=
+		new Pelicula("Los Increibles",false,2004,115,4.3);
+	Multimedia* about_time = 
+		new Pelicula("Cuestion de tiempo",false,2013,123,4.2);
+	Multimedia* spirit = 
+		new Pelicula("Spirit: el corcel indomable",false,2002,104,4.2);
+	Multimedia* fight_club = 
+		new Pelicula("El club de la pelea",false,1999,139,4.3);
+	Multimedia* castillo = 
+		new Pelicula("El increible castillo vagabundo",false,2004,119,4.8);
+	Multimedia* pelicula_huevos = 
+		new Pelicula("Una pelicula de huevos",false,2006,90,4);
+	Multimedia* klaus = 
+		new Pelicula("Klaus",false,2019,97,4.3);
+	Multimedia* dune = 
+		new Pelicula("Dune: Parte Uno",false,2021,155,4);
+	Multimedia* beetlejuice = 
+		new Pelicula("Beetlejuice",false,1988,92,4.8);
+	// Serie -> nombre, bloqueado, año, calificacion
+	// Serie -> lanzaTemporada()
+	// Serie -> lanzaEpisodio(int temporada, Episodio(nombre, duracion))
+	Multimedia* bebe_reno = 
+		new Serie("Bebe Reno",false,2024,4.5);
+	((Serie*)bebe_reno)->lanzaTemporada();
+	((Serie*)bebe_reno)->lanzaEpisodio(0,Episodio("Episodio 1",32));
+	((Serie*)bebe_reno)->lanzaEpisodio(0,Episodio("Episodio 2",27));
+	((Serie*)bebe_reno)->lanzaEpisodio(0,Episodio("Episodio 3",38));
+	Multimedia* rick_morty = 
+		new Serie("Rick and Morty",false,2013,4.3);
+	((Serie*)rick_morty)->lanzaTemporada();
+	((Serie*)rick_morty)->lanzaTemporada();
+	((Serie*)rick_morty)->lanzaEpisodio(0,Episodio("Pilot",22));
+	((Serie*)rick_morty)->lanzaEpisodio(0,Episodio("Lawnmower Dog",22));
+	((Serie*)rick_morty)->lanzaEpisodio(1,Episodio("A Rickle in Time",23));
+	((Serie*)rick_morty)->lanzaEpisodio(1,Episodio("Mortynight Run",23));
+	// Streaming -> servicios[i].lanzaMultimedia(Multimedia*)
+	biblioteca.lanzaMultimedia(increibles); ++nMult;
+	biblioteca.lanzaMultimedia(about_time); ++nMult;
+	biblioteca.lanzaMultimedia(spirit); ++nMult;
+	biblioteca.lanzaMultimedia(fight_club); ++nMult;
+	biblioteca.lanzaMultimedia(castillo); ++nMult;
+	biblioteca.lanzaMultimedia(pelicula_huevos); ++nMult;
+	biblioteca.lanzaMultimedia(klaus); ++nMult;
+	biblioteca.lanzaMultimedia(dune); ++nMult;
+	biblioteca.lanzaMultimedia(beetlejuice); ++nMult;
+	biblioteca.lanzaMultimedia(bebe_reno); ++nMult;
+	biblioteca.lanzaMultimedia(rick_morty); ++nMult;
+	servicios[0].lanzaMultimedia(spirit); 
+	servicios[0].lanzaMultimedia(pelicula_huevos);
+	servicios[0].lanzaMultimedia(bebe_reno);
+	servicios[1].lanzaMultimedia(about_time);
+	servicios[1].lanzaMultimedia(fight_club);
+	servicios[1].lanzaMultimedia(dune);
+	servicios[2].lanzaMultimedia(spirit);
+	servicios[2].lanzaMultimedia(castillo);
+	servicios[2].lanzaMultimedia(beetlejuice);
+	servicios[3].lanzaMultimedia(klaus);
+	servicios[3].lanzaMultimedia(rick_morty);
+	servicios[3].lanzaMultimedia(increibles);
+	nServ = 4;
+	bebe_reno->setBlock(true); klaus->setBlock(true);
+	increibles->setBlock(true);
+}
+
 bool menu(Streaming &biblioteca, Streaming *servicios, int &nServ, int &nMult) {
 	std::cout << "\n";
 	std::cout << "---------------MENU PRINCIPAL---------------\n";
@@ -14,7 +85,7 @@ bool menu(Streaming &biblioteca, Streaming *servicios, int &nServ, int &nMult) {
 	bool continua = true;
 	while( continua ) {
 		continua = false;
-		std::cout << "Ingrese el numero de operacion a realizar: ";
+		std::cout << "\nIngrese el numero de operacion a realizar: ";
 		std::string op;
 		fflush(stdin);
 		getline(std::cin, op);
@@ -41,6 +112,9 @@ int main() {
 	int nServ = 0, nMult = 0;
 	std::cout << "\n";
 	std::cout << "BIENVENIDO A ESTE ADMINISTRADOR DE PELICULAS\n";
+	if( afirmativo("¿Desea crear ejemplos demo?") ) {
+		crea_ejemplos(biblioteca, servicios, nServ, nMult);
+	}
 	while( !termina ) {
 		termina = menu(biblioteca, servicios, nServ, nMult);
 	}

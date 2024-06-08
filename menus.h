@@ -39,6 +39,7 @@ bool afirmativo(std::string instruccion) {
 	std::string op;
 	bool continua = true;
 	while( continua ) {
+		std::cout << "\n";
 		std::cout << instruccion << " (s/n)\n> ";
 		continua = false;
 		fflush(stdin); getline(std::cin, op);
@@ -63,12 +64,14 @@ void lanza_multimedia(Streaming &biblioteca,
 		std::string nombre;
 		int year, duracion;
 		float calificacion;
+		std::cout << "\n";
 		std::cout << "Ingrese el nombre de la pelicula: ";
 		fflush(stdin); getline(std::cin, nombre);
 		bool continua = true;
 		std::string num;
 		while( continua ) {
 			continua = false;
+			std::cout << "\n";
 			std::cout << "Ingrese el año de lanzamiento: ";
 			fflush(stdin); getline(std::cin, num);
 			if( !isnum(num) ) {
@@ -82,6 +85,7 @@ void lanza_multimedia(Streaming &biblioteca,
 		continua = true;
 		while( continua ) {
 			continua = false;
+			std::cout << "\n";
 			std::cout << "Ingrese la duracion de la pelicula: ";
 			fflush(stdin); getline(std::cin, num);
 			if( !isnum(num) ) {
@@ -96,6 +100,7 @@ void lanza_multimedia(Streaming &biblioteca,
 			continua = true;
 			while( continua ) {
 				continua = false;
+				std::cout << "\n";
 				std::cout << "Ingrese la calificacion: ";
 				fflush(stdin); getline(std::cin, num);
 				if( !isdecimal(num) ) {
@@ -128,6 +133,7 @@ void lanza_multimedia(Streaming &biblioteca,
 			std::string nombre;
 			int year;
 			float calificacion;
+			std::cout << "\n";
 			std::cout << "Ingrese el nombre de la serie: ";
 			fflush(stdin); getline(std::cin, nombre);
 			
@@ -136,6 +142,7 @@ void lanza_multimedia(Streaming &biblioteca,
 			
 			while( continua ) {
 				continua = false;
+				std::cout << "\n";
 				std::cout << "Ingrese el año de lanzamiento: ";
 				fflush(stdin); getline(std::cin, num);
 				if( !isnum(num) ) {
@@ -152,6 +159,7 @@ void lanza_multimedia(Streaming &biblioteca,
 				continua = true;
 				while( continua ) {
 					continua = false;
+					std::cout << "\n";
 					std::cout << "Ingrese la calificacion: ";
 					fflush(stdin); getline(std::cin, num);
 					if( !isdecimal(num) ) {
@@ -186,6 +194,7 @@ void lanza_multimedia(Streaming &biblioteca,
 				}
 			}
 			if( posibles.size() == 0 ) {
+				std::cout << "\n";
 				std::cout << "No hay series disponibles para lanzar nuevas "
 					<< "temporadas\n";
 				return;
@@ -199,6 +208,7 @@ void lanza_multimedia(Streaming &biblioteca,
 			int x;
 			while( continua ) {
 				continua = false;
+				std::cout << "\n";
 				std::cout << "Ingrese el numero de la serie de la que se "
 					<< "lanzara contenido: ";
 				fflush(stdin); getline(std::cin, num);
@@ -219,20 +229,24 @@ void lanza_multimedia(Streaming &biblioteca,
 			Serie* aux = (Serie*)biblioteca.modifica_multimedia(x);
 			if(afirmativo("¿Se desea lanzar una nueva temporada en esta serie?")){
 				aux->lanzaTemporada();
+				std::cout << "\n";
 				std::cout << "Temporada lanzada con exito, ahora se pueden "
 					<< "agregar episodios a esta\n";
 			}
 			else {
 				// lanzar episodio
 				if( aux->getNumTemporadas() == 0 ) {
+					std::cout << "\n";
 					std::cout << "No se puede lanzar un episodio en esta serie "
 						<< "porque no tiene temporadas disponibles\n";
 					return;
 				}
+				std::cout << "\n";
 				std::cout << "La serie cuenta con " << aux->getNumTemporadas()
 				<< " temporadas\n";
 				continua = true;
 				while( continua ) {
+					std::cout << "\n";
 					std::cout << "Ingrese el numero de temporada al que "
 					<< "pertenece el episodio: ";
 					continua = false;
@@ -252,11 +266,13 @@ void lanza_multimedia(Streaming &biblioteca,
 				// agregar episodio a la temporada x
 				std::string nombre;
 				int duracion;
+				std::cout << "\n";
 				std::cout << "Ingrese el nombre del episodio: ";
 				fflush(stdin); getline(std::cin, nombre);
 				continua = true;
 				while( continua ) {
 					continua = false;
+					std::cout << "\n";
 					std::cout << "Ingrese la duracion del episodio: ";
 					fflush(stdin); getline(std::cin, num);
 					if( !isnum(num) ) {
@@ -277,15 +293,18 @@ void lanza_multimedia(Streaming &biblioteca,
 	++nMult;
 	if( nServ == 0 ) {
 		nuevo->setBlock(bloqueado);
+		std::cout << "\n";
 		std::cout << "Contenido lanzado con exito\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout<<"Los servicios de streaming disponibles son los siguientes:\n";
 	for( int i=0; i<nServ; i++ ) {
 		std::cout << i+1 << ". " << servicios[i].getNombre() << "\n";
 	}
 	bool continua = true;
 	std::string num;
+	std::cout << "\n";
 	std::cout << "Ingrese el numero de las plataformas donde se encuentra "
 		<< "disponible el contenido, uno por uno, cuando termine de ingresar "
 		<< "los numeros presionar enter o escribir 0\n";
@@ -294,6 +313,7 @@ void lanza_multimedia(Streaming &biblioteca,
 	int x;
 	std::set<int> agregados;
 	while( continua ) {
+		std::cout << "\n";
 		std::cout << "Ingrese el numero: ";
 		fflush(stdin); getline(std::cin, num);
 		if( num == "" || num == "0" )
@@ -319,6 +339,7 @@ void lanza_multimedia(Streaming &biblioteca,
 
 void lanza_plataforma(Streaming &biblioteca, 
   Streaming *servicios, int &nServ, int &nMult){
+	std::cout << "\n";
 	std::cout << "Ingrese el nombre de la plataforma de streaming: ";
 	std::string nombre;
 	fflush(stdin); getline(std::cin, nombre);
@@ -330,10 +351,12 @@ void lanza_plataforma(Streaming &biblioteca,
 void modifica_multimedia(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	if( nMult == 0 ) {
+		std::cout << "\n";
 		std::cout << "No hay contenido multimedia disponible "
 			<< "para modificar\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout << "El contenido disponible es el siguiente:\n";
 	for( int i=0; i<nMult; i++ ) {
 		std::cout << i+1 << ". " <<
@@ -344,6 +367,7 @@ void modifica_multimedia(Streaming &biblioteca,
 	int x;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero del contenido a modificar: ";
 		fflush(stdin); getline(std::cin, num);
 		if( !isnum(num) ) {
@@ -359,6 +383,7 @@ void modifica_multimedia(Streaming &biblioteca,
 		}
 	}
 	// modificar elemento x de biblioteca
+	std::cout << "\n";
 	std::cout << "Las posibles modificaciones son:\n";
 	std::cout << "1. Nombre\n";
 	std::cout << "2. Año de publicacion\n";
@@ -375,11 +400,13 @@ void modifica_multimedia(Streaming &biblioteca,
 	std::cout << "0. Cancelar\n";
 	continua = true;
 	while( continua ) {
+		std::cout << "\n";
 		std::cout << "Ingrese el numero de la opcion a modificar: ";
 		continua = false;
 		fflush(stdin); getline(std::cin, num);
 		if( num == "1" ) {
 			std::string nombre;
+			std::cout << "\n";
 			std::cout << "Ingrese el nuevo nombre: ";
 			fflush(stdin); getline(std::cin, nombre);
 			aux->setNombre(nombre);
@@ -390,6 +417,7 @@ void modifica_multimedia(Streaming &biblioteca,
 			continua = true;
 			while( continua ) {
 				continua = false;
+				std::cout << "\n";
 				std::cout << "Ingrese el nuevo año: ";
 				fflush(stdin); getline(std::cin, num);
 				if( !isnum(num) ) {
@@ -407,6 +435,7 @@ void modifica_multimedia(Streaming &biblioteca,
 			continua = true;
 			while( continua ) {
 				continua = false;
+				std::cout << "\n";
 				std::cout << "Ingrese la nueva calificacion: ";
 				fflush(stdin); getline(std::cin, num);
 				if( !isdecimal(num) ) {
@@ -435,6 +464,7 @@ void modifica_multimedia(Streaming &biblioteca,
 				continua = true;
 				while( continua ) {
 					continua = false;
+					std::cout << "\n";
 					std::cout << "Ingrese la nueva duracion: ";
 					fflush(stdin); getline(std::cin, num);
 					if( !isnum(num) ) {
@@ -450,15 +480,18 @@ void modifica_multimedia(Streaming &biblioteca,
 			// si es serie modificar temporada o episodio
 			Serie* pt = (Serie*)aux;
 			if( pt->getNumTemporadas() == 0 ) {
+				std::cout << "\n";
 				std::cout << "No hay contenido para modificar en esta"
 					<< "serie\n";
 				return;
 			}
+			std::cout << "\n";
 			std::cout << "La serie cuenta con " << pt->getNumTemporadas()
 				<< " temporadas\n";
 			continua = true;
 			int x;
 			while( continua ) {
+				std::cout << "\n";
 				std::cout << "Ingrese el numero de temporada a modificar: ";
 				continua = false;
 				fflush(stdin); getline(std::cin, num);
@@ -477,15 +510,18 @@ void modifica_multimedia(Streaming &biblioteca,
 			// modificar temporada x
 			Temporada temp = pt->consulta_temporada(x);
 			if( temp.getNumEpisodios() == 0 ) {
+				std::cout << "\n";
 				std::cout << "Esta temporada no cuenta con episodios "
 					<< "para modificar\n";
 				return;
 			}
+			std::cout << "\n";
 			std::cout << "Esta temporada cuenta con " << 
 				temp.getNumEpisodios() << " episodio(s)\n";
 			int y;
 			continua = true;
 			while( continua ) {
+				std::cout << "\n";
 				std::cout << "Ingrese el numero de episodio a modificar: ";
 				continua = false;
 				fflush(stdin); getline(std::cin, num);
@@ -505,6 +541,7 @@ void modifica_multimedia(Streaming &biblioteca,
 			Episodio nuevo = temp.consultaEpisodio(y);
 			if( afirmativo("¿Desea modificar el nombre del episodio?") ) {
 				std::string nombre;
+				std::cout << "\n";
 				std::cout << "Ingrese el nuevo nombre del episodio: ";
 				fflush(stdin); getline(std::cin, nombre);
 				nuevo.setNombre(nombre);
@@ -514,6 +551,7 @@ void modifica_multimedia(Streaming &biblioteca,
 				continua = true;
 				while( continua ) {
 					continua = false;
+					std::cout << "\n";
 					std::cout << "Ingrese la nueva duracion: ";
 					fflush(stdin); getline(std::cin, num);
 					if( !isnum(num) ) {
@@ -540,10 +578,12 @@ void modifica_multimedia(Streaming &biblioteca,
 void modifica_plataforma(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	if( nServ == 0 ) {
+		std::cout << "\n";
 		std::cout << "Por el momento no se cuentan con plataformas para"
 			<< " modificar\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout << "Las plataformas disponibles son:\n";
 	for( int i=0; i<nServ; i++ ) {
 		std::cout << i+1 << ". ";
@@ -554,6 +594,7 @@ void modifica_plataforma(Streaming &biblioteca,
 	int x;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero de la plataforma a modificar: ";
 		fflush(stdin); getline(std::cin, num);
 		if( !isnum(num) ) {
@@ -570,6 +611,7 @@ void modifica_plataforma(Streaming &biblioteca,
 	}
 	// modifica streaming x
 	if( afirmativo("¿Desea cambiar el nombre del servicio?") ) {
+		std::cout << "\n";
 		std::cout << "Ingrese el nuevo nombre de la plataforma: ";
 		std::string aux;
 		fflush(stdin); getline(std::cin, aux);
@@ -578,10 +620,12 @@ void modifica_plataforma(Streaming &biblioteca,
 	}
 	// agrega un multimedia
 	if( nMult == 0 ) {
+		std::cout << "\n";
 		std::cout << "Por el momento no hay contenido disponible para "
 			<< "agregar\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout << "El catalogo disponible es el siguiente:\n";
 	for( int i=0; i<nMult; i++ ) {
 		std::cout << i+1 << ". " 
@@ -591,6 +635,7 @@ void modifica_plataforma(Streaming &biblioteca,
 	int otro;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero del contenido a agregar: ";
 		fflush(stdin); getline(std::cin, num);
 		if( !isnum(num) ) {
@@ -607,6 +652,7 @@ void modifica_plataforma(Streaming &biblioteca,
 	}
 	// agrega elemento otro de la biblioteca al streaming x
 	if( biblioteca.consulta_multimedia(otro)->bloqueado() ) {
+		std::cout << "\n";
 		std::cout << "El elemento seleccionado es exclusivo de otra"
 			<< " plataforma, para agregarlo primero debe liberarse\n";
 		return;
@@ -617,6 +663,7 @@ void modifica_plataforma(Streaming &biblioteca,
 void actualiza_contenido(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	// actualiza contenido
+	std::cout << "\n";
 	std::cout << "Las posibles actualizaciones son las siguientes:\n";
 	std::cout << "1. Lanzamiento de nuevo contenido/plataforma\n";
 	std::cout << "2. Modificar contenido/plataforma ya existente\n";
@@ -625,16 +672,19 @@ void actualiza_contenido(Streaming &biblioteca,
 	std::string op;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero de operacion a realizar: ";
 		fflush(stdin);
 		getline(std::cin, op);
 		if( op == "1" ) {
+			std::cout << "\n";
 			std::cout << "Los posibles lanzamientos son los siguientes:\n";
 			std::cout << "1. Nueva serie/pelicula/episodio\n";
 			std::cout << "2. Nueva plataforma de streaming\n";
 			std::cout << "0. Cancelar\n";
 			continua = true;
 			while( continua ) {
+				std::cout << "\n";
 				std::cout << "Ingrese el numero de lo que se desea lanzar: ";
 				continua = false;
 				fflush(stdin); getline(std::cin, op);
@@ -650,12 +700,14 @@ void actualiza_contenido(Streaming &biblioteca,
 			}
 		}
 		else if( op == "2" ) {
+			std::cout << "\n";
 			std::cout << "Las posibles modificaciones son las siguientes:\n";
 			std::cout << "1. Modificar serie/pelicula/episodio\n";
 			std::cout << "2. Modificar plataforma de streaming\n";
 			std::cout << "0. Cancelar\n";
 			continua = true;
 			while( continua ) {
+				std::cout << "\n";
 				std::cout<<"Ingrese el numero de lo que se desea modificar: ";
 				continua = false;
 				fflush(stdin); getline(std::cin, op);
@@ -680,6 +732,12 @@ void actualiza_contenido(Streaming &biblioteca,
 }
 
 void consulta_streaming(Streaming *servicios, int &nServ) {
+	if( nServ == 0 ) {
+		std::cout << "Por el momento no hay servicios de streaming "
+			<< "disponibles\n";
+		return;
+	}
+	std::cout << "\n";
 	std::cout<<"Los servicios de streaming disponibles son los siguientes:\n";
 	for( int i=0; i<nServ; i++ ) {
 		std::cout << i+1 << ". " << servicios[i].getNombre() << "\n";
@@ -687,6 +745,7 @@ void consulta_streaming(Streaming *servicios, int &nServ) {
 	std::string num;
 	bool continua = true;
 	while( continua ) {
+		std::cout << "\n";
 		std::cout << "Ingrese el numero del servicio a consultar: ";
 		continua = false;
 		fflush(stdin); getline(std::cin, num);
@@ -703,10 +762,12 @@ void consulta_streaming(Streaming *servicios, int &nServ) {
 		}
 		std::string aux = servicios[x].catalogo();
 		if( aux == "" ) {
+			std::cout << "\n";
 			std::cout << "Por el momento " << servicios[x].getNombre();
 			std::cout << " no cuenta con contenido disponible :(\n";
 		}
 		else {
+			std::cout << "\n";
 			std::cout << "El catalogo disponible en ";
 			std::cout << servicios[x].getNombre() << " es:\n";
 			std::cout << aux;
@@ -718,6 +779,7 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 	const Multimedia* copia = plataforma.consulta_multimedia(id);
 	if( copia->getTipo() == "serie" ) {
 		// consulta serie
+		std::cout << "\n";
 		std::cout << "1. Consultar episodio\n";
 		std::cout << "2. Informacion temporada completa\n";
 		std::cout << "3. Informacion serie completa\n";
@@ -726,21 +788,25 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 		std::string op;
 		while( continua ) {
 			continua = false;
+			std::cout << "\n";
 			std::cout << "Ingrese la opcion a consultar: ";
 			fflush(stdin); getline(std::cin, op);
 			const Serie* nuevo = (Serie*)copia;
 			if( op == "1" ) {
 				if( nuevo->getNumTemporadas() == 0 ) {
+					std::cout << "\n";
 					std::cout << "Por el momento esta serie no cuenta"
 						<< " con episodios para mostrar\n";
 					return;
 				}
+				std::cout << "\n";
 				std::cout << "La serie cuenta con " << nuevo->getNumTemporadas()
 					<< " temporadas\n";
 				continua = true;
 				std::string num;
 				int x;
 				while( continua ) {
+					std::cout << "\n";
 					std::cout << "Ingrese el numero de temporada donde se "
 						<< "encuentra el episodio: ";
 					continua = false;
@@ -760,13 +826,16 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 				// consultar episodio de temporada x
 				Temporada aux = nuevo->consulta_temporada(x);
 				if( aux.getNumEpisodios() == 0 ) {
+					std::cout << "\n";
 					std::cout << "Esta temporada no cuenta con episodios\n";
 					return;
 				}
+				std::cout << "\n";
 				std::cout << "Esta temporada cuenta con " << aux.getNumEpisodios()
 					<< " episodios\n";
 				continua = true;
 				while( continua ) {
+					std::cout << "\n";
 					std::cout << "Ingrese el numero de episodio a consultar: ";
 					continua = false;
 					fflush(stdin); getline(std::cin, num);
@@ -782,20 +851,24 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 						continue;
 					}
 				}
-				std::cout << "Informacion del episodio " << x << "\n";
+				std::cout << "\n";
+				std::cout << "Informacion del episodio " << x+1 << "\n";
 				std::cout << aux.info_episodio(x) << "\n";
 			}
 			else if( op == "2" ) {
 				if( nuevo->getNumTemporadas() == 0 ) {
+					std::cout << "\n";
 					std::cout << "Por el momento esta serie "
 						<< "no cuenta con temporadas\n";
 					return;
 				}
+				std::cout << "\n";
 				std::cout<< "La serie cuenta con " << nuevo->getNumTemporadas()
 					<< " temporadas\n";
 				continua = true;
 				std::string num;
 				while( continua ) {
+					std::cout << "\n";
 					std::cout << "Ingrese el numero de la temporada a"
 						<< " consultar: ";
 					continua = false;
@@ -811,12 +884,14 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 						continua = true;
 						continue;
 					}
+					std::cout << "\n";
 					std::cout << "Informacion sobre la temporada "
 						<< x+1 << " de la serie " << nuevo->getNombre()<< "\n";
 					std::cout << nuevo->temporada_string(x) << "\n";
 				}
 			}
 			else if( op == "3" ) {
+				std::cout << "\n";
 				std::cout << "Datos de la serie " << copia->getNombre() <<"\n";
 				std::cout << copia->to_string() << "\n";
 			}
@@ -830,6 +905,7 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 	}
 	else {
 		// consulta pelicula
+		std::cout << "\n";
 		std::cout << "Datos de la pelicula " << copia->getNombre() << "\n";
 		std::cout << "Nombre: " << copia->getNombre() << "\n";
 		std::cout << "Año de lanzamiento: " << copia->getYear() << "\n";
@@ -841,16 +917,19 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 void consulta_multimedia_biblioteca(const Streaming &biblioteca, 
 		const int &nMult) {
 	if( nMult == 0 ) {
+		std::cout << "\n";
 		std::cout << "Por el momento esta plataforma no cuenta ";
 		std::cout << "con contenido disponible :(\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout << "El contenido disponible es el siguiente:\n";
 	std::cout << biblioteca.catalogo();
 	std::string num;
 	bool continua = true;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero del contenido a consultar: ";
 		fflush(stdin); getline(std::cin, num);
 		if( !isnum(num) ) {
@@ -871,10 +950,12 @@ void consulta_multimedia_biblioteca(const Streaming &biblioteca,
 
 void consulta_multimedia_streaming(Streaming *servicios, int &nServ) {
 	if( nServ == 0 ) {
+		std::cout << "\n";
 		std::cout << "Por el momento no se cuentan con";
 		std::cout << " servicios de streaming :(\n";
 		return;
 	}
+	std::cout << "\n";
 	std::cout << "Los servicios de streaming disponibles son:\n";
 	for( int i=0; i<nServ; i++ ) {
 		std::cout << i+1 << ". " << servicios[i].getNombre() << "\n";
@@ -882,6 +963,7 @@ void consulta_multimedia_streaming(Streaming *servicios, int &nServ) {
 	std::string num;
 	bool continua = true;
 	while( continua ) {
+		std::cout << "\n";
 		std::cout << "Ingrese el numero de la plataforma donde se ";
 		std::cout << "encuentra el contenido a consultar: ";
 		continua = false;
@@ -904,6 +986,7 @@ void consulta_multimedia_streaming(Streaming *servicios, int &nServ) {
 
 void consulta_contenido(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
+	std::cout << "\n";
 	std::cout << "1. Consultar catalogo de servicio de streaming\n";
 	std::cout << "2. Consultar pelicula/serie\n";
 	std::cout << "0. Cancelar\n";
@@ -911,6 +994,7 @@ void consulta_contenido(Streaming &biblioteca,
 	std::string op;
 	while( continua ) {
 		continua = false;
+		std::cout << "\n";
 		std::cout << "Ingrese el numero de operacion a realizar: ";
 		fflush(stdin);
 		getline(std::cin, op);
@@ -918,11 +1002,13 @@ void consulta_contenido(Streaming &biblioteca,
 			consulta_streaming(servicios, nServ);
 		}
 		else if( op == "2" ) {
+			std::cout << "\n";
 			std::cout << "Indicar si el contenido se encuentra en un ";
 			std::cout << "servicio de streaming:\n";
 			std::cout << "1. Si\n2. No\n3. No lo se\n";
 			continua = true;
 			while( continua ) {
+				std::cout << "\n";
 				std::cout << "Ingrese el numero de la opcion a seleccionar: ";
 				continua = false;
 				fflush(stdin); getline(std::cin, op);
