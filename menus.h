@@ -1,12 +1,21 @@
 #ifndef MENUS_H
 #define MENUS_H
 
+// se declaran las librerias a utilizar
 #include <iostream>
 #include <string.h>
 #include <vector>
 #include <set>
-#include "streaming.h"
+#include "streaming.h" // se van a manejar servicios de streaming
+// no se incluyen multimedia.h ni series.h porque ya van incluidos en streaming.h
 
+/*
+* funcion auxiliar, sirve para determinar si una string
+* se trata de un entero
+* 
+* @ param string a comprobar
+* @ return bool que indica si la string es un entero o no
+*/
 bool isnum(const std::string &s) {
 	int i=0;
 	if( s[i] == '-' )
@@ -18,6 +27,12 @@ bool isnum(const std::string &s) {
 	return true;
 }
 
+/*
+* funcion que sirve para determinar si una string es un decimal o no
+* 
+* @ param string a verificar si es decimal o no
+* @ return bool que indica si la string es un numero decimal
+*/
 bool isdecimal(const std::string &s) {
 	int i=0;
 	if( s[i] == '-' )
@@ -35,6 +50,13 @@ bool isdecimal(const std::string &s) {
 	return true;
 }
 
+/*
+* esta funcion sirve para preguntar al usuario una pregunta de si o no
+* continua preguntando hasta que se ingrese una respuesta valida
+* 
+* @ param string que indica la instruccion que se le dara al usuario
+* @ return bool positivo si el usuario respondio si, falso en caso contrario
+*/
 bool afirmativo(std::string instruccion) {
 	std::string op;
 	bool continua = true;
@@ -55,6 +77,16 @@ bool afirmativo(std::string instruccion) {
 	return true; // no deberia ejecutarse
 }
 
+/*
+* contiene todas las preguntas que se le deben hacer al usuario al lanzar
+* un nuevo titulo, como el nombre, si es una serie o no, año de lanzamiento,
+* entre otras cosas, una vez introducidos los datos crea los objetos indicados
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void lanza_multimedia(Streaming &biblioteca, 
   Streaming *servicios, int &nServ, int &nMult){
 	Multimedia *nuevo;
@@ -337,6 +369,15 @@ void lanza_multimedia(Streaming &biblioteca,
 	nuevo->setBlock(bloqueado);
 }
 
+/*
+* lanza_plataforma pregunta el nombre del nuevo servicio de streaming a lanzar
+* y lo agrega a la lista de servicios disponibles
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void lanza_plataforma(Streaming &biblioteca, 
   Streaming *servicios, int &nServ, int &nMult){
 	std::cout << "\n";
@@ -348,6 +389,16 @@ void lanza_plataforma(Streaming &biblioteca,
 	return;
 }
 
+/*
+* modifica_multimedia se encarga de preguntar al usuario cual es el titulo a
+* modificar, asi como cual es el atributo que se quiere modificar, y despues
+* lo cambia utilizando setters de la clase correspondiente
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void modifica_multimedia(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	if( nMult == 0 ) {
@@ -575,6 +626,16 @@ void modifica_multimedia(Streaming &biblioteca,
 	}
 }
 
+/*
+* modifica_plataforma se encarga de preguntar por el servicio de streaming que
+* se quiere modificar asi como si se dese agregar contenido nuevo o simplemente
+* cambiar el nombre del servicio de streaming
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void modifica_plataforma(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	if( nServ == 0 ) {
@@ -610,6 +671,8 @@ void modifica_plataforma(Streaming &biblioteca,
 		}
 	}
 	// modifica streaming x
+	std::cout << "Es posible cambiar el nombre del servicio "
+		<< "o agregar contenido nuevo\n";
 	if( afirmativo("¿Desea cambiar el nombre del servicio?") ) {
 		std::cout << "\n";
 		std::cout << "Ingrese el nuevo nombre de la plataforma: ";
@@ -660,6 +723,17 @@ void modifica_plataforma(Streaming &biblioteca,
 	servicios[x].lanzaMultimedia(biblioteca.consulta_multimedia(otro));
 }
 
+/*
+* actualiza_contenido pregunta al usuario por la operacion a realizar que 
+* termine por actualizar el contenido, es decir, si quiere lanzar nuevo 
+* contenido o modificar contenido ya creado, de esta funcion se mandan llamar
+* las funciones correspondientes a cada caso
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void actualiza_contenido(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	// actualiza contenido
@@ -731,6 +805,16 @@ void actualiza_contenido(Streaming &biblioteca,
 	}
 }
 
+/*
+* consulta_streaming pregunta el servicio de streaming a consultar
+* asi como la informacion que se busca obtener, dependiendo de lo que
+* el usuario pida madna llamar la funcion correspondiente usando servicios[]
+* 
+* @ param Streaming *servicios, int &nServ
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void consulta_streaming(Streaming *servicios, int &nServ) {
 	if( nServ == 0 ) {
 		std::cout << "Por el momento no hay servicios de streaming "
@@ -775,6 +859,17 @@ void consulta_streaming(Streaming *servicios, int &nServ) {
 	}
 }
 
+/*
+* consulta_multimedia se encarga de preguntar la informacion del titulo que 
+* el usuario quiere obtener, dependiendo de lo que se busca manda llamar
+* la funcion correspondiente desde el objeto dentro del Streaming en el que
+* se encuentra
+* 
+* @ param Streaming &plataforma int &id
+* el servicio de Streaming donde se encuentra el contenido y el numero que 
+* tiene dentro de este
+* @ return
+*/
 void consulta_multimedia(const Streaming &plataforma, const int &id) {
 	const Multimedia* copia = plataforma.consulta_multimedia(id);
 	if( copia->getTipo() == "serie" ) {
@@ -914,6 +1009,15 @@ void consulta_multimedia(const Streaming &plataforma, const int &id) {
 	}
 }
 
+/*
+* consulta_multimedia_biblioteca se encarga de preguntar cual es el titulo que
+* se busca consultar sabiendo que puede no estar dentro de un 
+* servicio de streaming
+* 
+* @ param Streaming biblioteca, int &nMult
+* el Streaming con todos los titulos disponibles y el numero de titulos totales
+* @ return
+*/
 void consulta_multimedia_biblioteca(const Streaming &biblioteca, 
 		const int &nMult) {
 	if( nMult == 0 ) {
@@ -948,6 +1052,16 @@ void consulta_multimedia_biblioteca(const Streaming &biblioteca,
 	}
 }
 
+/*
+* consulta_multimedia_streaming se encarga de preguntar en cual
+* servicio de streaming se enceuntra el contenido que el usuario 
+* quiere consultar y manda llamar a la funcion que ingresa al 
+* streaming correspondiente para consultar el titulo en especifico
+* 
+* @ param Streaming *servicios, int &nServ
+* arreglo con los servicios de streaming y cuantos hay
+* @ return
+*/
 void consulta_multimedia_streaming(Streaming *servicios, int &nServ) {
 	if( nServ == 0 ) {
 		std::cout << "\n";
@@ -984,6 +1098,16 @@ void consulta_multimedia_streaming(Streaming *servicios, int &nServ) {
 	return;
 }
 
+/*
+* es un menu que pregunta por que tipo de contenido se queire consultar, 
+* pues puede consultarse tanto un servicio de streaming
+* como una pelicula o serie
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return
+*/
 void consulta_contenido(Streaming &biblioteca,
   Streaming *servicios,int &nServ, int &nMult){
 	std::cout << "\n";

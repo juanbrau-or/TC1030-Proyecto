@@ -1,8 +1,18 @@
+// se importan las librerias a utilizar
 #include <iostream>
 #include "streaming.h"
 #include "multimedia.h"
 #include "menus.h"
 
+/*
+* en caso de ser llamado crea algunos servicios de streaming de ejemplo,
+* asi como varias peliculas y series para que el usuario tenga una idea del
+* funcionamiento del programa
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, asi como cuantos hay de cada uno
+* @ return
+*/
 void crea_ejemplos(Streaming &biblioteca, Streaming *servicios, 
 		int &nServ, int &nMult ) {
 	servicios[0] = Streaming("Netflix Mexico");
@@ -10,7 +20,7 @@ void crea_ejemplos(Streaming &biblioteca, Streaming *servicios,
 	servicios[2] = Streaming("Max US");
 	servicios[3] = Streaming("Star+ Mexico");
 	// Pelicula -> nombre, bloqueado, año, duracion, calificacion
-	Multimedia* increibles=
+	Multimedia* increibles =
 		new Pelicula("Los Increibles",false,2004,115,4.3);
 	Multimedia* about_time = 
 		new Pelicula("Cuestion de tiempo",false,2013,123,4.2);
@@ -70,16 +80,26 @@ void crea_ejemplos(Streaming &biblioteca, Streaming *servicios,
 	servicios[3].lanzaMultimedia(rick_morty);
 	servicios[3].lanzaMultimedia(increibles);
 	nServ = 4;
+	// exclusividad de algunas series para sus plataformas
 	bebe_reno->setBlock(true); klaus->setBlock(true);
 	increibles->setBlock(true);
 }
 
+/*
+* imprime el menu principal con las funciones principales para el usuario,
+* despues se mandan llamar las funciones pertinentes
+* 
+* @ param Streaming biblioteca, Streaming *servicios, int &nServ, int &nMult
+* arreglo de streamings en el main, y cuantos titulos
+* hay en total en el programa
+* @ return bool que indica si el programa debe continuar o no
+*/
 bool menu(Streaming &biblioteca, Streaming *servicios, int &nServ, int &nMult) {
 	std::cout << "\n";
 	std::cout << "---------------MENU PRINCIPAL---------------\n";
 	std::cout << "Las posibles operaciones son las siguientes:\n";
 	std::cout << "1. Consulta de contenido/plataforma\n";
-	std::cout << "2. Actualizacion de contenido/plataforma\n";
+	std::cout << "2. Actualizacion/lanzamiento de contenido/plataforma\n";
 	std::cout << "0. Salir\n";
 	std::cout << "--------------------------------------------\n";
 	bool continua = true;
@@ -108,8 +128,11 @@ bool menu(Streaming &biblioteca, Streaming *servicios, int &nServ, int &nMult) {
 
 int main() {
 	bool termina = false;
-	Streaming servicios[20], biblioteca; // biblioteca contiene todo el contenido
+	Streaming servicios[20], biblioteca;
+	// biblioteca contiene todos los titulos creados
+	// servicios contiene los servicios de streaming creados
 	int nServ = 0, nMult = 0;
+	// nServ indica el numero total de servicios de streaming
 	std::cout << "\n";
 	std::cout << "BIENVENIDO A ESTE ADMINISTRADOR DE PELICULAS\n";
 	if( afirmativo("¿Desea crear ejemplos demo?") ) {
